@@ -3,17 +3,14 @@ var playState = {
 		//Add keyboard controls
 		this.cursor = game.input.keyboard.createCursorKeys();
 
+		this.createWorld();
+
 		//Setup player for overmap walking
 		this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'overmap_player');
 		this.player.anchor.setTo(0.5,0.5);
+		game.physics.arcade.enable(this.player);
 
-		//this.player.animations.add('down',[0], 8, true);
-		//this.player.animations.add('right',[1], 8, true);
-		//this.player.animations.add('up',[2],8, true);
-		//this.player.animations.add('left',[3],8, true);
-
-		this.createWorld();
-
+		this.camera.follow(this.player);
 		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
 											Phaser.Keyboard.DOWN,
 											Phaser.Keyboard.LEFT,
@@ -21,19 +18,34 @@ var playState = {
 	},
 
 	update:function(){
+		game.physics.arcade.collide(this.player, this.layer);
 		this.movePlayer();
+
+	},
+
+
+    render:function() {
+
+	    game.debug.cameraInfo(game.camera, 500, 32);
+	    //game.debug.spriteCoords(this.player, 32, 32);
+	    // game.debug.physicsBody(card.body);
+
 	},
 
 	createWorld:function(){
+
+		//game.world.setBounds(0, 0, 1312, 1312);
 		this.map = game.add.tilemap('map');
-		this.map.addTilesetImage('tileset');
+		this.map.addTilesetImage('test_tile_map');
 		this.layer = this.map.createLayer('Tile Layer 1');
 		this.layer.resizeWorld();
-		this.map.setCollision(1);
+		//this.map.setCollision(2);
 	},
 
 	movePlayer:function(){
-		//if the left arrow is pressed
+		
+		this.player.body.velocity.x = 0;
+		this.player.body.velocity.y = 0;
 
 		if(this.cursor.down.isDown && this.cursor.right.isDown){
 			this.player.body.velocity.x = 200;
@@ -55,20 +67,15 @@ var playState = {
 			//Move the player to the left
 			this.player.body.velocity.x = -200;
 			this.player.frame = 6;
-		} else if (this.cursor.right.isDown ){
+		} else if (this.cursor.right.isDown ){ //Move Right
 			this.player.body.velocity.x = 200;
 			this.player.frame = 2;
-		} else if (this.cursor.up.isDown){
+		} else if (this.cursor.up.isDown){ // Move Up
 			this.player.body.velocity.y = -200;
 			this.player.frame = 4;
-		} else if (this.cursor.down.isDown){
+		} else if (this.cursor.down.isDown){ // Move Down
 			this.player.body.velocity.y = 200;
 			this.player.frame = 0;
-		} else {
-			this.player.body.velocity.x = 0;
-			this.player.body.velocity.y = 0
 		}
-
-		
 	},
 }
