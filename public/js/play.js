@@ -42,10 +42,10 @@ var playState = {
 			this.player.body.velocity.x = 200;
 			this.player.frame = 1;
 		} else if (this.cursor.up.isDown){
-			this.player.body.velocity.y = 200;
+			this.player.body.velocity.y = -200;
 			this.player.frame = 2;
 		} else if (this.cursor.down.isDown){
-			this.player.body.velocity.y = -200;
+			this.player.body.velocity.y = 200;
 			this.player.frame = 0;
 		} else {
 			this.player.body.velocity.x = 0;
