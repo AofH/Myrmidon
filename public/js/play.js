@@ -34,16 +34,33 @@ var playState = {
 
 	movePlayer:function(){
 		//if the left arrow is pressed
-		if(this.cursor.left.isDown){
+
+		if(this.cursor.down.isDown && this.cursor.right.isDown){
+			this.player.body.velocity.x = 200;
+			this.player.body.velocity.y = 200;
+			this.player.frame = 1;
+		} else if (this.cursor.down.isDown && this.cursor.left.isDown){
+			this.player.body.velocity.x = -200;
+			this.player.body.velocity.y = 200;
+			this.player.frame = 7;
+		} else if (this.cursor.up.isDown && this.cursor.right.isDown){
+			this.player.body.velocity.x = 200;
+			this.player.body.velocity.y = -200;
+			this.player.frame = 3;
+		} else if (this.cursor.up.isDown && this.cursor.left.isDown){
+			this.player.body.velocity.x = -200;
+			this.player.body.velocity.y = -200;
+			this.player.frame = 5;
+		} else if(this.cursor.left.isDown){
 			//Move the player to the left
 			this.player.body.velocity.x = -200;
-			this.player.frame = 3;
+			this.player.frame = 6;
 		} else if (this.cursor.right.isDown ){
 			this.player.body.velocity.x = 200;
-			this.player.frame = 1;
+			this.player.frame = 2;
 		} else if (this.cursor.up.isDown){
 			this.player.body.velocity.y = -200;
-			this.player.frame = 2;
+			this.player.frame = 4;
 		} else if (this.cursor.down.isDown){
 			this.player.body.velocity.y = 200;
 			this.player.frame = 0;
