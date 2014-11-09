@@ -4,5 +4,7 @@ game.state.add('boot', bootState);
 game.state.add('load', loadState);
 game.state.add('menu', menuState);
 game.state.add('play', playState);
+game.state.add('mapOneLoad', mapOneLoadState);
+game.state.add('mapOne', mapOneState);
 
 game.state.start('boot');

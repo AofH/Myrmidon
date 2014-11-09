@@ -9,6 +9,8 @@ var playState = {
 		this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
 
+
+
 		this.camera.follow(this.player);
 
 
@@ -22,58 +24,39 @@ var playState = {
 
 	update:function(){
 		game.physics.arcade.collide(this.player, this.layer);
+		game.physics.arcade.overlap(this.player, this.teleporters, this.teleportToLevel, null, this);
+		
 		this.movePlayer();
-
 	},
 
 
     render:function() {
 
-	    game.debug.cameraInfo(game.camera, 32, 32);
-	    game.debug.spriteCoords(this.player, 32, 100);
-	    game.debug.spriteBounds(this.player);
-	    // game.debug.physicsBody(card.body);
+	    //game.debug.cameraInfo(game.camera, 32, 32);
+	    //game.debug.spriteCoords(this.player, 32, 100);
+	    //game.debug.spriteBounds(this.player);
+	    //game.debug.physicsBody(card.body);
 
 	},
 
 	createWorld:function(){
-
-		//game.world.setBounds(0, 0, 1312, 1312);
-		this.map = game.add.tilemap('smallmap');
+		this.map = game.add.tilemap('map');
 		this.map.addTilesetImage('test_tile_map');
 		this.map.setCollision(2);
 		this.layer = this.map.createLayer('Tile Layer 1');
 		this.layer.resizeWorld();
-		
-		//this.layer.debug = true;
 
-		
+		this.teleporters = this.add.group();
+		this.teleporters.enableBody = true;
+		this.map.createFromObjects('Object Layer 1', 3, 'teleporters', 0, true, false, this.teleporters);
+
 	},
 
 	movePlayer:function(){
 		
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
-		/*
-		if (this.cursor.up.isDown)
-	    {
-	        this.camera.y -= 4;
-	    }
-	    else if (this.cursor.down.isDown)
-	    {
-	        this.camera.y += 4;
-	    }
-
-	    if (this.cursor.left.isDown)
-	    {
-	        this.camera.x -= 4;
-	    }
-	    else if (this.cursor.right.isDown)
-	    {
-	        this.camera.x += 4;
-	    }
-	    */
-		
+	
 		if(this.cursor.down.isDown && this.cursor.right.isDown){
 			this.player.body.velocity.x = 200;
 			this.player.body.velocity.y = 200;
@@ -103,6 +86,13 @@ var playState = {
 		} else if (this.cursor.down.isDown){ // Move Down
 			this.player.body.velocity.y = 200;
 			this.player.frame = 0;
+		}
+	},
+
+	teleportToLevel:function(player, teleporter){
+		console.log(teleporter.name);
+		if(teleporter.name === 'transporter1') {
+			game.state.start('mapOneLoad');
 		}
 	},
 }
