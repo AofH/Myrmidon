@@ -1,7 +1,6 @@
 var playState = {
 	create:function(){
-		//Add keyboard controls
-		this.cursor = game.input.keyboard.createCursorKeys();
+	
 
 		this.createWorld();
 
@@ -11,6 +10,10 @@ var playState = {
 		game.physics.arcade.enable(this.player);
 
 		this.camera.follow(this.player);
+
+
+			//Add keyboard controls
+		this.cursor = game.input.keyboard.createCursorKeys();
 		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
 											Phaser.Keyboard.DOWN,
 											Phaser.Keyboard.LEFT,
@@ -26,8 +29,9 @@ var playState = {
 
     render:function() {
 
-	    game.debug.cameraInfo(game.camera, 500, 32);
-	    //game.debug.spriteCoords(this.player, 32, 32);
+	    game.debug.cameraInfo(game.camera, 32, 32);
+	    game.debug.spriteCoords(this.player, 32, 100);
+	    game.debug.spriteBounds(this.player);
 	    // game.debug.physicsBody(card.body);
 
 	},
@@ -35,18 +39,41 @@ var playState = {
 	createWorld:function(){
 
 		//game.world.setBounds(0, 0, 1312, 1312);
-		this.map = game.add.tilemap('map');
+		this.map = game.add.tilemap('smallmap');
 		this.map.addTilesetImage('test_tile_map');
+		this.map.setCollision(2);
 		this.layer = this.map.createLayer('Tile Layer 1');
 		this.layer.resizeWorld();
-		//this.map.setCollision(2);
+		
+		//this.layer.debug = true;
+
+		
 	},
 
 	movePlayer:function(){
 		
 		this.player.body.velocity.x = 0;
 		this.player.body.velocity.y = 0;
+		/*
+		if (this.cursor.up.isDown)
+	    {
+	        this.camera.y -= 4;
+	    }
+	    else if (this.cursor.down.isDown)
+	    {
+	        this.camera.y += 4;
+	    }
 
+	    if (this.cursor.left.isDown)
+	    {
+	        this.camera.x -= 4;
+	    }
+	    else if (this.cursor.right.isDown)
+	    {
+	        this.camera.x += 4;
+	    }
+	    */
+		
 		if(this.cursor.down.isDown && this.cursor.right.isDown){
 			this.player.body.velocity.x = 200;
 			this.player.body.velocity.y = 200;

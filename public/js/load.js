@@ -18,7 +18,7 @@ var loadState = {
 
 		game.load.image('test_tile_map', 'assets/test_tile_map.png');
 		game.load.tilemap('map', 'assets/walkabout_test_map.json', null, Phaser.Tilemap.TILED_JSON);
-
+		game.load.tilemap('smallmap', 'assets/small_walkabout.json', null, Phaser.Tilemap.TILED_JSON);
 
 
 	},
