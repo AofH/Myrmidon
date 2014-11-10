@@ -13,8 +13,9 @@ mapOneLoadState = {
 		game.load.setPreloadSprite(progressBar);
 
 
-		game.load.spritesheet('sidescroll_player', 'assets/monster_character.png',20,20);
-		
+		//game.load.spritesheet('sidescroll_player', 'assets/monster_character.png',20,20);
+		game.load.spritesheet('sidescroll_player', 'assets/big_monster_char.png',40,40);
+
 		game.load.image('map_one_tilemap','assets/map_one_tilemap.png');
 		game.load.tilemap('map_one', 'assets/map_one.json', null, Phaser.Tilemap.TILED_JSON);
 	},
@@ -28,7 +29,7 @@ mapOneState = {
 	create:function(){
 		this.createWorld();
 
-		this.sidescrollPlayer = game.add.sprite(80,720,'sidescroll_player');
+		this.sidescrollPlayer = game.add.sprite(80,600,'sidescroll_player');
 		this.sidescrollPlayer.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.sidescrollPlayer);
 		this.sidescrollPlayer.animations.add('right',[1,2],8,true);
