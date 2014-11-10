@@ -15,13 +15,13 @@ var loadState = {
 
 		//Load our various assets here
 		game.load.spritesheet('overmap_player','assets/eight_frame_test_char.png',20,20);
-		
+		game.load.spritesheet('wormhole', 'assets/wormhole_animation.png',40,40);	
 
 		game.load.image('test_tile_map', 'assets/test_tile_map.png');
 		game.load.tilemap('map', 'assets/walkabout_test_map.json', null, Phaser.Tilemap.TILED_JSON);
 		game.load.tilemap('smallmap', 'assets/small_walkabout.json', null, Phaser.Tilemap.TILED_JSON);
 
-		
+
 
 	},
 

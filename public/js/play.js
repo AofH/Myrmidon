@@ -48,8 +48,10 @@ var playState = {
 
 		this.teleporters = this.add.group();
 		this.teleporters.enableBody = true;
-		this.map.createFromObjects('Object Layer 1', 3, 'teleporters', 0, true, false, this.teleporters);
+		this.map.createFromObjects('Object Layer 1', 3, 'wormhole', 0, true, false, this.teleporters);
 
+		this.teleporters.callAll('animations.add', 'animations', 'spin', [0, 1, 2], 10, true);
+		this.teleporters.callAll('animations.play', 'animations', 'spin');
 	},
 
 	movePlayer:function(){
