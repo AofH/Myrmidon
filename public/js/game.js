@@ -7,4 +7,7 @@ game.state.add('play', playState);
 game.state.add('mapOneLoad', mapOneLoadState);
 game.state.add('mapOne', mapOneState);
 
+game.state.add('combatMapLoadState', combatMapLoadState);
+game.state.add('combatMapPlayState', combatMapPlayState);
+
 game.state.start('boot');

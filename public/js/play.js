@@ -50,8 +50,8 @@ var playState = {
 		this.teleporters.enableBody = true;
 		this.map.createFromObjects('Object Layer 1', 3, 'wormhole', 0, true, false, this.teleporters);
 
-		this.teleporters.callAll('animations.add', 'animations', 'spin', [0, 1, 2], 10, true);
-		this.teleporters.callAll('animations.play', 'animations', 'spin');
+		this.teleporters.callAll('animations.add', 'animations', 'wormhole_spin', [0, 1, 2], 10, true);
+		this.teleporters.callAll('animations.play', 'animations', 'wormhole_spin');
 	},
 
 	movePlayer:function(){
@@ -95,6 +95,8 @@ var playState = {
 		console.log(teleporter.name);
 		if(teleporter.name === 'transporter1') {
 			game.state.start('mapOneLoad');
+		} else if(teleporter.name === 'transporter2') {
+			game.state.start('combatMapLoadState');
 		}
 	},
 }
