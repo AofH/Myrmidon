@@ -14,7 +14,8 @@ combatMapLoadState = {
 
 
 		game.load.spritesheet('combat_player', 'assets/eight_frame_test_char.png',20,20);
-		game.load.tilemap('combatmap', 'assets/small_walkabout.json', null, Phaser.Tilemap.TILED_JSON);
+		game.load.image('griddedTilemap', 'assets/test_grid_tilemap.png');
+		game.load.tilemap('combatmap', 'assets/small_walkabout_grid.json', null, Phaser.Tilemap.TILED_JSON);
 
 	},
 
@@ -29,8 +30,14 @@ combatMapPlayState = {
 	create:function(){
 		this.createWorld();
 		this.setupPlayer();
-		this.setupCamera();
-		this.setupKeyboard();
+		
+		this.camera.follow(this.player);
+
+		this.cursor = game.input.keyboard.createCursorKeys();
+		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
+											Phaser.Keyboard.DOWN,
+											Phaser.Keyboard.LEFT,
+											Phaser.Keyboard.RIGHT]);
 		this.combatPlayer = new CombatPlayer(this.game, this.player, this.cursor);
 
 	
@@ -43,13 +50,25 @@ combatMapPlayState = {
 		this.combatPlayer.move();
 	},
 
+	render:function(){
+		
+
+	},
+
 	createWorld:function(){
 		this.map = game.add.tilemap('combatmap');
-		this.map.addTilesetImage('test_tile_map');
+		this.map.addTilesetImage('griddedTilemap');
 		this.map.setCollision(2);
 		this.layer = this.map.createLayer('Tile Layer 1');
 		this.layer.resizeWorld();
-		this.layer.debug = true;
+		
+		//this.layer.debug = true;
+
+		
+
+
+		
+
 	},
 
 	setupPlayer:function(){
@@ -58,15 +77,5 @@ combatMapPlayState = {
 		game.physics.arcade.enable(this.player);
 	},
 
-	setupCamera:function(){
-		this.camera.follow(this.player);
-	},
-
-	setupKeyboard:function(){
-		this.cursor = game.input.keyboard.createCursorKeys();
-		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
-											Phaser.Keyboard.DOWN,
-											Phaser.Keyboard.LEFT,
-											Phaser.Keyboard.RIGHT]);
-	},
+	
 }
