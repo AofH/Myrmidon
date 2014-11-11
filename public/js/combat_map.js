@@ -14,6 +14,8 @@ combatMapLoadState = {
 
 
 		game.load.spritesheet('combat_player', 'assets/eight_frame_test_char.png',20,20);
+		game.load.spritesheet('walking_rouge', 'assets/walking_rouge.png', 32, 32);
+
 		game.load.image('griddedTilemap', 'assets/test_grid_tilemap.png');
 		game.load.tilemap('combatmap', 'assets/small_walkabout_grid.json', null, Phaser.Tilemap.TILED_JSON);
 
@@ -39,8 +41,8 @@ combatMapPlayState = {
 											Phaser.Keyboard.LEFT,
 											Phaser.Keyboard.RIGHT]);
 		this.combatPlayer = new CombatPlayer(this.game, this.player, this.cursor);
-
-	
+		console.log(this.combatPlayer);
+		
 
 
 	},
@@ -63,18 +65,17 @@ combatMapPlayState = {
 		this.layer.resizeWorld();
 		
 		//this.layer.debug = true;
-
-		
-
-
-		
-
 	},
 
 	setupPlayer:function(){
-		this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'combat_player');
-		this.player.anchor.setTo(0.5,0.5);
+		//this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'combat_player');
+		
+		this.player = game.add.sprite(9*40+4, 9*40+4, 'walking_rouge');
+		//this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
+
+		this.player.animations.add('idle', [0,1], 2, true);
+		this.player.animations.play('idle');
 	},
 
 	
