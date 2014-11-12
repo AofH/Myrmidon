@@ -9,72 +9,75 @@ var CombatPlayer = function(game, player, cursor){
 CombatPlayer.prototype = {
 	move:function(){
 
-		console.log(this.nextY);
-		console.log(this.player.position.y);
+		
 
 		if(this.movingPlayer){
-			if (this.player.position.y === this.nextY || this.player.position.x === this.nextX) {
-				this.player.body.velocity.y = 0;
-				this.player.body.velocity.x = 0;
-				this.nextY = 0;
-				this.nextX = 0;
-				this.movingPlayer = false;
-			}
+
+			//console.log("NextX: "+ this.nextX);
+			//console.log("NextY: "+ this.nextY);
+
+			if(this.moveDirection === 'down') {
+				if(this.player.position.y >= this.nextY){
+					this.stopMoving();
+					this.centerPlayer(this.player.position.x, this.nextY);
+					this.nextY = 0;
+				}
+			} else if (this.moveDirection === 'up'){
+				if(this.player.position.y <= this.nextY){
+					this.stopMoving();
+					this.centerPlayer(this.player.position.x, this.nextY);
+					this.nextY = 0;
+				}
+			} else if (this.moveDirection === 'right'){
+				if(this.player.position.x >= this.nextX){
+					this.stopMoving();
+					this.centerPlayer(this.nextX, this.player.position.y);
+					this.nextX = 0;
+				}
+			} else if (this.moveDirection === 'left'){
+				if(this.player.position.x <= this.nextX){
+					this.stopMoving();
+					this.centerPlayer(this.nextX, this.player.position.y);
+					this.nextX = 0;
+				}
+			} 
 		} else {
 			if(this.cursor.down.isDown){
 				//this.currentPosition = this.player.position.y;
 				this.nextY = this.player.position.y + 40;
+				//console.log("Player Position y: "+this.player.position.y);
 				this.movingPlayer = true;
+				this.moveDirection = "down";
 				this.player.body.velocity.y = 100;
 			} else if (this.cursor.up.isDown){
 				this.nextY = this.player.position.y - 40;
+				//console.log("Player Position y: "+this.player.position.y);
 				this.movingPlayer = true;
+				this.moveDirection = "up";
 				this.player.body.velocity.y = -100;
 			} else if(this.cursor.right.isDown){
 				this.nextX = this.player.position.x + 40;
 				this.movingPlayer = true;
+				this.moveDirection = "right";
 				this.player.body.velocity.x = 100;
 			} else if (this.cursor.left.isDown){
 				this.nextX = this.player.position.x - 40;
 				this.movingPlayer = true;
+				this.moveDirection = "left";
 				this.player.body.velocity.x = -100;
 			}
 		}
+	},
 
-
-	/*
-		this.player.body.velocity.x = 0;
+	stopMoving:function(){
 		this.player.body.velocity.y = 0;
-	
-		if(this.cursor.down.isDown && this.cursor.right.isDown){
-			this.player.body.velocity.x = 200;
-			this.player.body.velocity.y = 200;
-			//this.player.frame = 1;
-		} else if (this.cursor.down.isDown && this.cursor.left.isDown){
-			this.player.body.velocity.x = -200;
-			this.player.body.velocity.y = 200;
-			//this.player.frame = 7;
-		} else if (this.cursor.up.isDown && this.cursor.right.isDown){
-			this.player.body.velocity.x = 200;
-			this.player.body.velocity.y = -200;
-		//	this.player.frame = 3;
-		} else if (this.cursor.up.isDown && this.cursor.left.isDown){
-			this.player.body.velocity.x = -200;
-			this.player.body.velocity.y = -200;
-			//this.player.frame = 5;
-		} else if(this.cursor.left.isDown){
-			//Move the player to the left
-			this.player.body.velocity.x = -200;
-			//this.player.frame = 6;
-		} else if (this.cursor.right.isDown ){ //Move Right
-			this.player.body.velocity.x = 200;
-			//this.player.frame = 2;
-		} else if (this.cursor.up.isDown){ // Move Up
-			this.player.body.velocity.y = -200;
-			//this.player.frame = 4;
-		} else if (this.cursor.down.isDown){ // Move Down
-			this.player.body.velocity.y = 200;
-			//this.player.frame = 0;
-		}*/
+		this.player.body.velocity.x = 0;
+		this.movingPlayer = false;	
+	},
+
+	centerPlayer:function(x,y){
+		
+		this.player.position.x = x;
+		this.player.position.y = y;
 	}
 }
