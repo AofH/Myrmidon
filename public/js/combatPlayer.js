@@ -1,6 +1,6 @@
 var CombatPlayer = function(game, player, cursor){
 	this.game = game;
-	this.player = player;	
+	this.player = player;
 	this.cursor = cursor;
 
 	this.movingPlayer = false;
@@ -9,7 +9,6 @@ var CombatPlayer = function(game, player, cursor){
 CombatPlayer.prototype = {
 	move:function(){
 
-		
 
 		if(this.movingPlayer){
 
@@ -40,7 +39,7 @@ CombatPlayer.prototype = {
 					this.centerPlayer(this.nextX, this.player.position.y);
 					this.nextX = 0;
 				}
-			} 
+			}
 		} else {
 			if(this.cursor.down.isDown){
 				//this.currentPosition = this.player.position.y;
@@ -72,12 +71,29 @@ CombatPlayer.prototype = {
 	stopMoving:function(){
 		this.player.body.velocity.y = 0;
 		this.player.body.velocity.x = 0;
-		this.movingPlayer = false;	
+		this.movingPlayer = false;
 	},
 
 	centerPlayer:function(x,y){
-		
-		this.player.position.x = x;
-		this.player.position.y = y;
+
+		var newX = this.getClosestMultipleOfSpriteSize(x,40);
+		var newY = this.getClosestMultipleOfSpriteSize(y,40);
+
+		this.player.position.x = newX;
+		this.player.position.y = newY;
+	},
+
+	getClosestMultipleOfSpriteSize:function(number, size){
+		var upperValue = size * (Math.ceil(Math.abs(number/size)));
+		var lowerValue = size * (Math.floor(Math.abs(number/size)));
+
+		var upperDifference = Math.abs(number - upperValue);
+		var lowerDifference = Math.abs(number - lowerValue);
+
+		if (upperDifference > lowerDifference) {
+			return lowerValue;
+		} else {
+			return upperValue;
+		}
 	}
 }

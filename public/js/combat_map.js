@@ -64,13 +64,12 @@ combatMapPlayState = {
 		this.map.setCollision(2);
 		this.layer = this.map.createLayer('Tile Layer 1');
 		this.layer.resizeWorld();
-		
 		//this.layer.debug = true;
 	},
 
 	setupPlayer:function(){
 		//this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'combat_player');
-		
+
 		this.player = game.add.sprite(9*40, 9*40, 'big_walking_rouge');
 		//this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
@@ -79,5 +78,5 @@ combatMapPlayState = {
 		this.player.animations.play('idle');
 	},
 
-	
+
 }
