@@ -12,9 +12,6 @@ CombatPlayer.prototype = {
 
 		if(this.movingPlayer){
 
-			//console.log("NextX: "+ this.nextX);
-			//console.log("NextY: "+ this.nextY);
-
 			if(this.moveDirection === 'down') {
 				if(this.player.position.y >= this.nextY){
 					this.stopMoving();
@@ -76,11 +73,8 @@ CombatPlayer.prototype = {
 
 	centerPlayer:function(x,y){
 
-		var newX = this.getClosestMultipleOfSpriteSize(x,40);
-		var newY = this.getClosestMultipleOfSpriteSize(y,40);
-
-		this.player.position.x = newX;
-		this.player.position.y = newY;
+		this.player.position.x = this.getClosestMultipleOfSpriteSize(x,this.player.body.height);;
+		this.player.position.y = this.getClosestMultipleOfSpriteSize(y,this.player.body.width);;
 	},
 
 	getClosestMultipleOfSpriteSize:function(number, size){
