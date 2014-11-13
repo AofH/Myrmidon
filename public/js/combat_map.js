@@ -64,6 +64,8 @@ combatMapPlayState = {
 		this.map.setCollision(2);
 		this.layer = this.map.createLayer('Tile Layer 1');
 		this.layer.resizeWorld();
+
+		this.map.setTileIndexCallback(2,this.hitWall, this);
 		//this.layer.debug = true;
 	},
 
@@ -78,5 +80,10 @@ combatMapPlayState = {
 		this.player.animations.play('idle');
 	},
 
-
+	hitWall:function(sprite, tile){
+		this.combatPlayer.stopMoving();
+		this.combatPlayer.moveToPreviousPosition();
+		console.log("HIT WALL");
+		return false;
+	}
 }

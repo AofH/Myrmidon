@@ -39,25 +39,26 @@ CombatPlayer.prototype = {
 			}
 		} else {
 			if(this.cursor.down.isDown){
-				//this.currentPosition = this.player.position.y;
 				this.nextY = this.player.position.y + 40;
-				//console.log("Player Position y: "+this.player.position.y);
+				this.previousY = this.player.position.y;
 				this.movingPlayer = true;
 				this.moveDirection = "down";
 				this.player.body.velocity.y = 100;
 			} else if (this.cursor.up.isDown){
 				this.nextY = this.player.position.y - 40;
-				//console.log("Player Position y: "+this.player.position.y);
+				this.previousY = this.player.position.y;
 				this.movingPlayer = true;
 				this.moveDirection = "up";
 				this.player.body.velocity.y = -100;
 			} else if(this.cursor.right.isDown){
 				this.nextX = this.player.position.x + 40;
+				this.previousX = this.player.position.x;
 				this.movingPlayer = true;
 				this.moveDirection = "right";
 				this.player.body.velocity.x = 100;
 			} else if (this.cursor.left.isDown){
 				this.nextX = this.player.position.x - 40;
+				this.previousX = this.player.position.x;
 				this.movingPlayer = true;
 				this.moveDirection = "left";
 				this.player.body.velocity.x = -100;
@@ -69,6 +70,23 @@ CombatPlayer.prototype = {
 		this.player.body.velocity.y = 0;
 		this.player.body.velocity.x = 0;
 		this.movingPlayer = false;
+	},
+
+	moveToPreviousPosition:function(){
+		this.movingPlayer = true;
+		if(this.player.body.position.y < this.previousY) {
+			this.nextY = this.previousY;
+			this.player.body.velocity.y = 100;
+		} else if(this.player.body.position.y > this.previousY){
+			this.nextY = this.previousY;
+			this.player.body.velocity.y = -100;
+		} else if (this.player.body.position.x < this.previousX){
+			this.nextX = this.previousX;
+			this.player.body.velocity.x = 100;
+		} else if (this.player.body.position.x > this.previousX){
+			this.nextX = this.previousX;
+			this.player.body.velocity.x = -100;
+		}
 	},
 
 	centerPlayer:function(x,y){
@@ -89,5 +107,5 @@ CombatPlayer.prototype = {
 		} else {
 			return upperValue;
 		}
-	}
+	},
 }
