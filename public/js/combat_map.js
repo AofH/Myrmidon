@@ -72,7 +72,7 @@ combatMapPlayState = {
 	setupPlayer:function(){
 		//this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'combat_player');
 
-		this.player = game.add.sprite(9*40, 9*40, 'big_walking_rouge');
+		this.player = game.add.sprite(9*40 + 4, 9*40 + 4, 'walking_rouge');
 		//this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
 
@@ -82,6 +82,7 @@ combatMapPlayState = {
 
 	hitWall:function(sprite, tile){
 		this.combatPlayer.stopMoving();
+		console.log(sprite);
 		this.combatPlayer.moveToPreviousPosition();
 		console.log("HIT WALL");
 		return false;

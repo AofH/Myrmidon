@@ -74,30 +74,43 @@ CombatPlayer.prototype = {
 
 	moveToPreviousPosition:function(){
 		this.movingPlayer = true;
+
+		console.log("nextX: "+ this.nextX + " previousX: "+this.previousX);
+		console.log("nextY: "+ this.nextY + " previousY: "+this.previousY);
+		console.log("X: " +this.player.body.position.x + " Y: "+this.player.body.position.y);
+
 		if(this.player.body.position.y < this.previousY) {
 			this.nextY = this.previousY;
 			this.player.body.velocity.y = 100;
 		} else if(this.player.body.position.y > this.previousY){
 			this.nextY = this.previousY;
 			this.player.body.velocity.y = -100;
+		} else if(this.player.body.position.y === this.previousY){ // if the y value is the same don't move 
+			this.movingPlayer = false;
 		} else if (this.player.body.position.x < this.previousX){
 			this.nextX = this.previousX;
 			this.player.body.velocity.x = 100;
 		} else if (this.player.body.position.x > this.previousX){
 			this.nextX = this.previousX;
 			this.player.body.velocity.x = -100;
+		} else if (this.player.body.position.x === this.previousX){ // if the x value is the same don't move 
+			this.movingPlayer = false;
 		}
 	},
 
 	centerPlayer:function(x,y){
-
-		this.player.position.x = this.getClosestMultipleOfSpriteSize(x,this.player.body.height);;
-		this.player.position.y = this.getClosestMultipleOfSpriteSize(y,this.player.body.width);;
+		console.log("x: " +x+ " height: "+this.player.body.height);
+		console.log("x: " +y+ " height: "+this.player.body.width);
+		this.player.position.x = this.getClosestMultipleOfSpriteSize(x,40) + 4; // 40 is the tile size and 4 is the offset for 32x32 tiles
+		this.player.position.y = this.getClosestMultipleOfSpriteSize(y,40) + 4;
+		console.log("rounded x: " + this.player.position.x);
+		console.log("rounded y: " + this.player.position.y);
 	},
 
 	getClosestMultipleOfSpriteSize:function(number, size){
 		var upperValue = size * (Math.ceil(Math.abs(number/size)));
 		var lowerValue = size * (Math.floor(Math.abs(number/size)));
+
 
 		var upperDifference = Math.abs(number - upperValue);
 		var lowerDifference = Math.abs(number - lowerValue);
