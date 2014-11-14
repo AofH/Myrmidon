@@ -87,7 +87,9 @@ CombatPlayer.prototype = {
 			this.player.body.velocity.y = -100;
 		} else if(this.player.body.position.y === this.previousY){ // if the y value is the same don't move 
 			this.movingPlayer = false;
-		} else if (this.player.body.position.x < this.previousX){
+		} 
+
+		if (this.player.body.position.x < this.previousX){
 			this.nextX = this.previousX;
 			this.player.body.velocity.x = 100;
 		} else if (this.player.body.position.x > this.previousX){
