@@ -15,6 +15,8 @@ combatMapLoadState = {
 
 		game.load.spritesheet('combat_player', 'assets/eight_frame_test_char.png',20,20);
 		game.load.spritesheet('walking_rouge', 'assets/walking_rouge.png', 32, 32);
+		game.load.spritesheet('walk_overlay', 'assets/walk_overlay.png',40,40);
+		game.load.spritesheet('selection_square', 'assets/selection_square.png', 40, 40);
 		game.load.spritesheet('big_walking_rouge', 'assets/40x40_walking_rouge.png',40,40);
 
 		game.load.image('griddedTilemap', 'assets/test_grid_tilemap.png');
@@ -32,15 +34,17 @@ combatMapLoadState = {
 combatMapPlayState = {
 	create:function(){
 		this.createWorld();
+		this.setupSelectionBox();
 		this.setupPlayer();
 		
-		this.camera.follow(this.player);
+		//this.camera.follow(this.player);
 
 		this.cursor = game.input.keyboard.createCursorKeys();
 		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
 											Phaser.Keyboard.DOWN,
 											Phaser.Keyboard.LEFT,
 											Phaser.Keyboard.RIGHT]);
+		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor);
 		this.combatPlayer = new CombatPlayer(this.game, this.player, this.cursor);
 		console.log(this.combatPlayer);
 		
@@ -50,7 +54,8 @@ combatMapPlayState = {
 
 	update:function(){
 		game.physics.arcade.collide(this.player, this.layer);
-		this.combatPlayer.move();
+		this.selectionBox.move();
+		//this.combatPlayer.move();
 	},
 
 	render:function(){
@@ -72,12 +77,21 @@ combatMapPlayState = {
 	setupPlayer:function(){
 		//this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'combat_player');
 
+
+
 		this.player = game.add.sprite(9*40 + 4, 9*40 + 4, 'walking_rouge');
 		//this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
 
+		this.player.inputEnabled = true;
+		this.player.events.onInputDown.add(this.characterClicked, this);
 		this.player.animations.add('idle', [0,1], 2, true);
 		this.player.animations.play('idle');
+	},
+
+	setupSelectionBox:function(){
+		this.selectionSquare = game.add.sprite(40,40, 'selection_square');
+		this.camera.follow(this.selectionSquare);
 	},
 
 	hitWall:function(sprite, tile){
@@ -86,5 +100,10 @@ combatMapPlayState = {
 		this.combatPlayer.moveToPreviousPosition();
 		console.log("HIT WALL");
 		return false;
-	}
+	},
+
+	characterClicked:function(sprite, pointer){
+		this.camera.follow(this.sprite);
+		console.log("Character Clicked");
+	},
 }
