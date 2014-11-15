@@ -59,7 +59,7 @@ combatMapPlayState = {
 	},
 
 	render:function(){
-		
+		game.debug.spriteCoords(this.selectionSquare, 32, 32);
 
 	},
 
@@ -92,6 +92,7 @@ combatMapPlayState = {
 	setupSelectionBox:function(){
 		this.selectionSquare = game.add.sprite(40,40, 'selection_square');
 		this.camera.follow(this.selectionSquare);
+		game.physics.arcade.enable(this.selectionSquare);
 	},
 
 	hitWall:function(sprite, tile){
