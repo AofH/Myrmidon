@@ -38,7 +38,10 @@ combatMapPlayState = {
 		this.setupSelectionBox();
 
 		this.activeCharacters = this.game.add.group();
-		this.setupPlayer();
+		this.activeCharacters.enableBody = true;
+		this.activeCharacters.physicsBodyType = Phaser.Physics.ARCADE;
+
+		this.setupUnits();
 		
 		//this.camera.follow(this.player);
 
@@ -49,17 +52,11 @@ combatMapPlayState = {
 											Phaser.Keyboard.RIGHT,
 											Phaser.Keyboard.CONTROL]);
 		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor, this.activeCharacters);
-		this.combatPlayer = new CombatPlayer(this.game, this.player, this.cursor);
-		//console.log(this.combatPlayer);
-		
-
-
 	},
 
 	update:function(){
 		game.physics.arcade.collide(this.player, this.layer);
 		this.selectionBox.move();
-		//this.combatPlayer.move();
 	},
 
 	render:function(){
@@ -78,20 +75,12 @@ combatMapPlayState = {
 		//this.layer.debug = true;
 	},
 
-	setupPlayer:function(){
-		//this.player = game.add.sprite(game.world.centerX, game.world.centerY, 'combat_player');
+	setupUnits:function(){
+		var unit = new Unit(this.game, 9, 9, 'walking_rouge');
+		this.activeCharacters.add(unit);
 
-
-
-		this.player = game.add.sprite(9*40 + 4, 9*40 + 4, 'walking_rouge');
-		this.activeCharacters.add(this.player);
-		//this.player.anchor.setTo(0.5,0.5);
-		game.physics.arcade.enable(this.player);
-
-		this.player.inputEnabled = true;
-		this.player.events.onInputDown.add(this.characterClicked, this);
-		this.player.animations.add('idle', [0,1], 2, true);
-		this.player.animations.play('idle');
+		this.activeCharacters.callAll('animations.add', 'animations', 'idle', [0,1],2 , true);
+		this.activeCharacters.callAll('animations.play', 'animations', 'idle');	
 	},
 
 	setupSelectionBox:function(){
