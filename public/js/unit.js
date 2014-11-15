@@ -3,6 +3,7 @@ Unit = function(game, x, y, spriteName){
 
 	this.moveSpeed = 3;
 	this.health = 1
+	this.selected = false;
 };
 
 Unit.prototype = Object.create(Phaser.Sprite.prototype);

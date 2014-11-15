@@ -59,10 +59,12 @@ SelectionBox.prototype={
 				this.selectionBox.body.velocity.x = -400;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
 				this.characterSprites.forEach(function(item){
-					console.log(item);
+					//console.log(item);
 
-					if(this.boxOverlaps(item)){
+					if(this.boxOverlaps(item) && item.selected === false){
 						console.log("OVERLAP WORKS");
+						item.selected = true;
+						console.log(item.moveSpeed);
 					}
 
 
