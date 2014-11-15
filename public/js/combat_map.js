@@ -46,7 +46,7 @@ combatMapPlayState = {
 											Phaser.Keyboard.RIGHT]);
 		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor);
 		this.combatPlayer = new CombatPlayer(this.game, this.player, this.cursor);
-		console.log(this.combatPlayer);
+		//console.log(this.combatPlayer);
 		
 
 

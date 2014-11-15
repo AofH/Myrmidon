@@ -13,32 +13,30 @@ SelectionBox.prototype={
 			if(this.moveDirection === 'down') {
 				if(this.selectionBox.position.y >= this.nextY){
 					this.stopMoving();
-					this.centerSprite(this.selectionBox.position.x, this.nextY);
+					this.centerBoxY(this.selectionBox.position.x, this.nextY, -6.6666667);
 					this.nextY = 0;
 				}
 			} else if (this.moveDirection === 'up'){
 				if(this.selectionBox.position.y <= this.nextY){
 					this.stopMoving();
-					this.centerSprite(this.selectionBox.position.x, this.nextY);
+					this.centerBoxY(this.selectionBox.position.x, this.nextY, 6.6666667);
 					this.nextY = 0;
 				}
 			} else if (this.moveDirection === 'right'){
 				if(this.selectionBox.position.x >= this.nextX){
 					this.stopMoving();
-					this.centerSprite(this.nextX, this.selectionBox.position.y);
+					this.centerBoxX(this.nextX, this.selectionBox.position.y, -6.6666667);
 					this.nextX = 0;
 				}
 			} else if (this.moveDirection === 'left'){
 				if(this.selectionBox.position.x <= this.nextX){
 					this.stopMoving();
-					this.centerSprite(this.nextX, this.selectionBox.position.y);
+					this.centerBoxX(this.nextX, this.selectionBox.position.y, 6.6666667);
 					this.nextX = 0;
 				}
 			}
 		} else {
-			
 			if(this.cursor.down.isDown){
-
 				this.nextY = this.selectionBox.position.y + 40;
 				this.movingCursor = true;
 				this.moveDirection = "down";
@@ -53,37 +51,34 @@ SelectionBox.prototype={
 				this.nextX = this.selectionBox.position.x + 40;
 				this.movingCursor = true;
 				this.selectionBox.body.velocity.x = 400;
-				
 			} else if (this.cursor.left.isDown){
 				this.moveDirection = "left";
 				this.nextX = this.selectionBox.position.x - 40;
 				this.movingCursor = true;
 				this.selectionBox.body.velocity.x = -400;
-				
 			}
 		}
 	},
 
-	centerSprite:function(x,y){
-		console.log("x: " +x+ " height: "+this.selectionBox.body.height);
-		console.log("y: " +y+ " height: "+this.selectionBox.body.width);
-		this.selectionBox.position.x = this.getClosestMultipleOfSpriteSize(x,40); // 40 is the tile size 
+	centerBoxX:function(x,y, offset){
+		this.selectionBox.position.x = this.getClosestMultipleOfSpriteSize(x,40) + offset; // 40 is the tile size 
 		this.selectionBox.position.y = this.getClosestMultipleOfSpriteSize(y,40);
-		console.log("rounded x: " + this.selectionBox.position.x);
-		console.log("rounded y: " + this.selectionBox.position.y);
+	},
+
+	centerBoxY:function(x,y,offset){
+		this.selectionBox.position.x = this.getClosestMultipleOfSpriteSize(x,40); // 40 is the tile size 
+		this.selectionBox.position.y = this.getClosestMultipleOfSpriteSize(y,40) + offset;
 	},
 
 	stopMoving:function(){
-		this.movingCursor = false;
 		this.selectionBox.body.velocity.x = 0;
 		this.selectionBox.body.velocity.y = 0;
-		
+		this.movingCursor = false;
 	},
 
 	getClosestMultipleOfSpriteSize:function(number, size){
 		var upperValue = size * (Math.ceil(Math.abs(number/size)));
 		var lowerValue = size * (Math.floor(Math.abs(number/size)));
-
 
 		var upperDifference = Math.abs(number - upperValue);
 		var lowerDifference = Math.abs(number - lowerValue);
