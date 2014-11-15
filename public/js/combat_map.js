@@ -33,8 +33,11 @@ combatMapLoadState = {
 
 combatMapPlayState = {
 	create:function(){
+		
 		this.createWorld();
 		this.setupSelectionBox();
+
+		this.activeCharacters = this.game.add.group();
 		this.setupPlayer();
 		
 		//this.camera.follow(this.player);
@@ -43,8 +46,9 @@ combatMapPlayState = {
 		game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
 											Phaser.Keyboard.DOWN,
 											Phaser.Keyboard.LEFT,
-											Phaser.Keyboard.RIGHT]);
-		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor);
+											Phaser.Keyboard.RIGHT,
+											Phaser.Keyboard.CONTROL]);
+		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor, this.activeCharacters);
 		this.combatPlayer = new CombatPlayer(this.game, this.player, this.cursor);
 		//console.log(this.combatPlayer);
 		
@@ -80,6 +84,7 @@ combatMapPlayState = {
 
 
 		this.player = game.add.sprite(9*40 + 4, 9*40 + 4, 'walking_rouge');
+		this.activeCharacters.add(this.player);
 		//this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
 

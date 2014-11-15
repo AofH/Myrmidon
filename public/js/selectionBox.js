@@ -1,7 +1,8 @@
-var SelectionBox = function(game, selectionBox, cursor){
+var SelectionBox = function(game, selectionBox, cursor, characterSprites){
 	this.game = game;
 	this.selectionBox = selectionBox;
 	this.cursor = cursor;
+	this.characterSprites = characterSprites;
 
 	this.movingCursor = false;
 }
@@ -56,8 +57,25 @@ SelectionBox.prototype={
 				this.nextX = this.selectionBox.position.x - 40;
 				this.movingCursor = true;
 				this.selectionBox.body.velocity.x = -400;
+			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
+				this.characterSprites.forEach(function(item){
+					console.log(item);
+
+					if(this.boxOverlaps(item)){
+						console.log("OVERLAP WORKS");
+					}
+
+
+				}, this);
 			}
+
 		}
+	},
+
+	boxOverlaps:function(sprite){
+		var selectionBoxBounds = this.selectionBox.getBounds();
+		var spriteBounds = sprite.getBounds();
+		return Phaser.Rectangle.intersects(selectionBoxBounds, spriteBounds);
 	},
 
 	centerBoxX:function(x,y, offset){
