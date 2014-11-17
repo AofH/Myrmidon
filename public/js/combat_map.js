@@ -37,6 +37,9 @@ combatMapPlayState = {
 		this.createWorld();
 		this.setupSelectionBox();
 
+		this.movementGroup = this.game.add.group();
+
+
 		this.activeCharacters = this.game.add.group();
 		this.activeCharacters.enableBody = true;
 		this.activeCharacters.physicsBodyType = Phaser.Physics.ARCADE;
@@ -51,23 +54,12 @@ combatMapPlayState = {
 											Phaser.Keyboard.LEFT,
 											Phaser.Keyboard.RIGHT,
 											Phaser.Keyboard.CONTROL]);
-		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor, this.activeCharacters);
+		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor, this.activeCharacters, this.movementGroup);
 	},
 
 	update:function(){
 		game.physics.arcade.collide(this.player, this.layer);
 		this.selectionBox.move();
-
-
-		this.activeCharacters.forEach(function(sprite){
-			if(sprite.selected){
-				this.movementStartX = sprite.boxX;
-				this.movementStartY = sprite.boxY;
-				this.spriteMovement = sprite.moveSpeed;
-				this.drawMovementSprites = true;
-			}
-		});
-
 	},
 
 	render:function(){
@@ -112,7 +104,4 @@ combatMapPlayState = {
 		this.camera.follow(this.sprite);
 		console.log("Character Clicked");
 	},
-
-	drawMovementSprites:function(x,y,speed){
-	}
 }
