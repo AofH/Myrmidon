@@ -57,6 +57,17 @@ combatMapPlayState = {
 	update:function(){
 		game.physics.arcade.collide(this.player, this.layer);
 		this.selectionBox.move();
+
+
+		this.activeCharacters.forEach(function(sprite){
+			if(sprite.selected){
+				this.movementStartX = sprite.boxX;
+				this.movementStartY = sprite.boxY;
+				this.spriteMovement = sprite.moveSpeed;
+				this.drawMovementSprites = true;
+			}
+		});
+
 	},
 
 	render:function(){
@@ -101,4 +112,7 @@ combatMapPlayState = {
 		this.camera.follow(this.sprite);
 		console.log("Character Clicked");
 	},
+
+	drawMovementSprites:function(x,y,speed){
+	}
 }

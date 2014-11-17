@@ -20,7 +20,7 @@ var loadState = {
 		game.load.image('test_tile_map', 'assets/test_tile_map.png');
 		game.load.tilemap('map', 'assets/walkabout_test_map.json', null, Phaser.Tilemap.TILED_JSON);
 
-
+		game.load.spritesheet('walk_overlay', 'assets/walk_overlay.png', 40, 40);
 	},
 
 	create:function(){

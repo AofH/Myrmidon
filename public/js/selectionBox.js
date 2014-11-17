@@ -65,6 +65,7 @@ SelectionBox.prototype={
 						console.log("OVERLAP WORKS");
 						item.selected = true;
 						console.log(item.moveSpeed);
+						this.drawMovement(item.boxX, item.boxY, item.moveSpeed);
 					}
 
 
@@ -109,4 +110,7 @@ SelectionBox.prototype={
 			return upperValue;
 		}
 	},
+
+	drawMovement:function(x,y,speed){
+	}
 }
