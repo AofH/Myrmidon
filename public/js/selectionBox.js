@@ -61,23 +61,24 @@ SelectionBox.prototype={
 				this.movingCursor = true;
 				this.selectionBox.body.velocity.x = -400;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-				this.characterSprites.forEach(function(item){
-					if(this.boxOverlaps(item) && item.selected === false){
-						item.selected = true;
-						this.drawMovementOverlay(item.boxX, item.boxY, item.moveSpeed);
-						this.characterSelected = true;
-					}
-
-				}, this);
-
-				/*
+				
+					
 				if(this.characterSelected){
 					this.movementGroup.forEach(function(movementSprite){
 						if(this.boxOverlaps(movementSprite)){
 							console.log("MOvement Overlap");
 						}
 					}, this);
-				}*/
+				} else {
+					this.characterSprites.forEach(function(item){
+						if(this.boxOverlaps(item) && item.selected === false){
+							item.selected = true;
+							this.drawMovementOverlay(item.boxX, item.boxY, item.moveSpeed);
+							this.characterSelected = true;
+						}
+
+					}, this);
+				}
 
 			}
 
@@ -138,8 +139,8 @@ SelectionBox.prototype={
 			finishX = x + branchLength;
 
 			for(var loopX = startX; loopX <= finishX; loopX++){
-				movementSprite = game.add.sprite(loopX * 40, loopY * 40, 'walk_overlay');
-				movementSprite.alpha = 0.50
+				movementSprite = new MovementOverlay(this.game, loopX, loopY);
+				//movementSprite.alpha = 0.50
 				this.movementGroup.add(movementSprite);
 			}
 
