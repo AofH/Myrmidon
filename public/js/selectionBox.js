@@ -7,6 +7,7 @@ var SelectionBox = function(game, selectionBox, cursor, characterSprites, moveme
 
 
 	this.movingCursor = false;
+	this.characterSelected = false;
 }
 
 SelectionBox.prototype={
@@ -63,10 +64,21 @@ SelectionBox.prototype={
 				this.characterSprites.forEach(function(item){
 					if(this.boxOverlaps(item) && item.selected === false){
 						item.selected = true;
-						this.drawMovement(item.boxX, item.boxY, item.moveSpeed);
+						this.drawMovementOverlay(item.boxX, item.boxY, item.moveSpeed);
+						this.characterSelected = true;
 					}
 
 				}, this);
+
+				/*
+				if(this.characterSelected){
+					this.movementGroup.forEach(function(movementSprite){
+						if(this.boxOverlaps(movementSprite)){
+							console.log("MOvement Overlap");
+						}
+					}, this);
+				}*/
+
 			}
 
 		}
@@ -108,7 +120,7 @@ SelectionBox.prototype={
 		}
 	},
 
-	drawMovement:function(x,y,speed){
+	drawMovementOverlay:function(x,y,speed){
 		console.log("Drawing Movment");
 		var movementSprite = null;
 
