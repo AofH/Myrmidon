@@ -140,7 +140,6 @@ SelectionBox.prototype={
 
 			for(var loopX = startX; loopX <= finishX; loopX++){
 				movementSprite = new MovementOverlay(this.game, loopX, loopY);
-				//movementSprite.alpha = 0.50
 				this.movementGroup.add(movementSprite);
 			}
 

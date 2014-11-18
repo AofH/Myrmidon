@@ -55,11 +55,13 @@ combatMapPlayState = {
 											Phaser.Keyboard.RIGHT,
 											Phaser.Keyboard.CONTROL]);
 		this.selectionBox = new SelectionBox(this.game, this.selectionSquare, this.cursor, this.activeCharacters, this.movementGroup);
+		this.cameraController = new CameraControl(this.game, this.cursor);
 	},
 
 	update:function(){
 		game.physics.arcade.collide(this.player, this.layer);
-		this.selectionBox.move();
+		//this.selectionBox.move();
+		this.cameraController.move();
 	},
 
 	render:function(){
@@ -88,7 +90,7 @@ combatMapPlayState = {
 
 	setupSelectionBox:function(){
 		this.selectionSquare = game.add.sprite(40,40, 'selection_square');
-		this.camera.follow(this.selectionSquare);
+		//this.camera.follow(this.selectionSquare);
 		game.physics.arcade.enable(this.selectionSquare);
 	},
 
