@@ -60,17 +60,11 @@ SelectionBox.prototype={
 				this.movingCursor = true;
 				this.selectionBox.body.velocity.x = -400;
 			} else if (this.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)){
-				console.log("CONTROL");
 				this.characterSprites.forEach(function(item){
-					//console.log(item);
-
 					if(this.boxOverlaps(item) && item.selected === false){
-						console.log("OVERLAP WORKS");
 						item.selected = true;
-						console.log(item.moveSpeed);
 						this.drawMovement(item.boxX, item.boxY, item.moveSpeed);
 					}
-
 
 				}, this);
 			}
@@ -118,47 +112,34 @@ SelectionBox.prototype={
 		console.log("Drawing Movment");
 		var movementSprite = null;
 
-		var  startX = x - speed;
-		if(startX < 0){
-			startX = 0;
+		var startX = 0;
+		var finishX = 0;
+		var startY = y - speed;
+		var finishY = y + speed;
+
+		var maxLengthReached = false;
+		var branchLength = 0;
+
+		for(var loopY = startY; loopY <= finishY; loopY++)
+		{
+			startX = x - branchLength;
+			finishX = x + branchLength;
+
+			for(var loopX = startX; loopX <= finishX; loopX++){
+				movementSprite = game.add.sprite(loopX * 40, loopY * 40, 'walk_overlay');
+				movementSprite.alpha = 0.50
+				this.movementGroup.add(movementSprite);
+			}
+
+			if(branchLength === speed){
+				maxLengthReached = true;
+			}
+
+			if(maxLengthReached){
+				branchLength--;
+			} else {
+				branchLength++;
+			}
 		}
-		var finishX = x + speed;
-
-		console.log(startX * 40);
-		console.log(finishX * 40);
-
-		
-		for(var i = startX; i <= finishX; i++) {
-			movementSprite = game.add.sprite(i * 40, y * 40, 'walk_overlay');
-			movementSprite.alpha = 0.50
-			this.movementGroup.add(movementSprite);
-		}
-
-		//this.characterSprites.bringToTop();
-
-		/*
-		movementSprite = game.add.sprite(startX * 40 , y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75;
-		movementSprite = game.add.sprite(startX * 40 + 40 , y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75;
-		movementSprite = game.add.sprite(startX * 40 + 80, y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75;
-		movementSprite = game.add.sprite(startX * 40 + 120, y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75;
-		movementSprite = game.add.sprite(startX * 40 + 160, y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75;
-		movementSprite = game.add.sprite(startX * 40 + 200, y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75;
-		movementSprite = game.add.sprite(startX * 40 + 240, y * 40, 'walk_overlay');
-		movementSprite.alpha = 0.75; */
-
-
-		/*for(var i = startX * 40; i <= finishX * 40; i + 40 ){
-			console.log(i);
-			//movementSprite = game.add.sprite(i, y * 40, 'walk_overlay');
-			//this.activeMovementBox.add(movementSprite);
-		}*/
-
-
 	},
 }

@@ -4,7 +4,7 @@ Unit = function(game, x, y, spriteName){
 	this.boxX = x;
 	this.boxY = y;
 
-	this.moveSpeed = 3;
+	this.moveSpeed = 4;
 	this.health = 1
 	this.selected = false;
 };
